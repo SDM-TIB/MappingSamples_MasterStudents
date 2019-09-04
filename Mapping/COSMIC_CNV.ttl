@@ -1,0 +1,183 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix base: <http://tib.de/ontario/mapping#> .
+@prefix iasis: <http://project-iasis.eu/vocab/> .
+
+<#Gene_CNV>
+	rml:logicalSource [ rml:source "/data/data/genomic/COSMIC_cnv.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+	rr:subjectMap [
+		rr:template "http://project-iasis.eu/Gene/{gene_name}";
+		rr:class iasis:Gene;
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:geneLabel;
+		rr:objectMap [
+			rml:reference "gene_name";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:gene_isRelatedTo_sample;
+		rr:objectMap [ 
+			rr:parentTriplesMap <#Sample_CNV> 
+		]
+	].
+
+<#Sample_CNV>
+	rml:logicalSource [ rml:source "/data/data/genomic/COSMIC_cnv.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+	rr:subjectMap [
+		rr:template "http://project-iasis.eu/Sample/{ID_SAMPLE}";
+		rr:class iasis:Sample;
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:sampleID;
+		rr:objectMap [
+			rml:reference "ID_SAMPLE";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:sampleLabel;
+		rr:objectMap [
+			rml:reference "SAMPLE_NAME";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:primaryTissue;
+		rr:objectMap [ 
+			rr:template "http://project-iasis.eu/Tissue/{Primary site}";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:tissueSubtype1;
+		rr:objectMap [
+			rr:template "http://project-iasis.eu/SubTissue/{Site subtype 1}";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:primaryHistology;
+		rr:objectMap [ 
+			rr:template "http://project-iasis.eu/TissueType/{Primary histology}";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:histologySubtype1;
+		rr:objectMap [ 
+			rr:template "http://project-iasis.eu/TissueSubType/{Histology subtype 1}";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:sample_isTakenFrom_tumor;
+		rr:objectMap [ 
+			rr:parentTriplesMap <#Tumor_CNV> 
+		]	
+	].
+
+<#Tumor_CNV>
+	rml:logicalSource [ rml:source "/data/data/genomic/COSMIC_cnv.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+	rr:subjectMap [
+		rr:template "http://project-iasis.eu/Tumor/{ID_TUMOUR}";
+		rr:class iasis:Tumor;
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:tumorID;
+		rr:objectMap [
+			rml:reference "ID_TUMOUR";
+		]
+	].
+
+<#CNV_CNV>
+	rml:logicalSource [ rml:source "/data/data/genomic/COSMIC_cnv.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+	rr:subjectMap [
+		rr:template "http://project-iasis.eu/CNV/{CNV_ID}";
+		rr:class iasis:CNV;
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:cnvID;
+		rr:objectMap [
+			rml:reference "CNV_ID";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:total_cn;
+		rr:objectMap [ 
+			rml:reference "TOTAL_CN";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:minor_allele;
+		rr:objectMap [ 
+			rml:reference "MINOR_ALLELE";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:cnv_chromosome;
+		rr:objectMap [ 
+			rml:reference "Chromosome";
+		]
+	];
+	rr:predicateObjectMap [ 
+		rr:predicate iasis:cnv_start;
+		rr:objectMap [ 
+			rml:reference "Start";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:cnv_end;
+		rr:objectMap [ 
+			rml:reference "End"; 
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:cnv_studyID;
+		rr:objectMap [ 
+			rml:reference "ID_STUDY"; 
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:mutationType;
+		rr:objectMap [
+			rml:reference "MUT_TYPE";
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:cnv_isLocatedIn_sample;
+		rr:objectMap [ 
+			rr:parentTriplesMap <#Sample_CNV> 
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:cnv_isLocatedIn_gene;
+		rr:objectMap [ 
+			rr:parentTriplesMap <#Gene_CNV> 
+		]
+	].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
